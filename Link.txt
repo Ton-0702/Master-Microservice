@@ -1,0 +1,6 @@
+link Git source bài học: https://github.com/eazybytes/microservices 
+
+udemy : https://www.udemy.com/course/master-microservices-with-spring-docker-kubernetes/
+
+localhost:8080 : tomcat port
+localhost:8080/h2-console : port h2 database
