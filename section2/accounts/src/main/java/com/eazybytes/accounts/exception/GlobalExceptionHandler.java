@@ -9,9 +9,21 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDateTime;
 
+//Defines a class that can handle global exceptions
 @ControllerAdvice // telling SpringBoot framework whenever any exception is thrown, this class will be invoked
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(Exception.class) // this method will be invoked whenever exception runtime and don't have in any other class exception, it will be invoke in the end
+    public ResponseEntity<ErrorResponseDto> handleGlobalException(Exception exception,
+                                                                            WebRequest webRequest){
+        ErrorResponseDto errorResponseDTO = new ErrorResponseDto(
+                webRequest.getDescription(false), // to get the API path, when true it will return the full path (IP, api, ...)
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                exception.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(errorResponseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @ExceptionHandler(ResourceNotFoundException.class) // this method will be invoked whenever CustomerAlreadyExistsException is thrown
     public ResponseEntity<ErrorResponseDto> handleResourceNotFoundException(ResourceNotFoundException exception,

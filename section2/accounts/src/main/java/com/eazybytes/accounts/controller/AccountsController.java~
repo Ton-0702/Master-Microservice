@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController // Concatenate @Controller and @ResponseBody annotations to return JSON
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE}) // produces to return JSON
-@AllArgsConstructor
+
 public class AccountsController {
 
     private IAccountsService iAccountsService;
@@ -48,6 +48,17 @@ public class AccountsController {
     }
 
     @DeleteMapping("/delete")
-    public
+    public ResponseEntity<ResponseDto> deleteAccountDetails(@RequestParam String mobileNumber) {
+        boolean isDeleted = iAccountsService.deleteAccount(mobileNumber);
+        if(isDeleted) {
+            return ResponseEntity
+                    .status(HttpStatus.OK) // response to header
+                    .body(new ResponseDto(AccountsConstants.STATUS_200, AccountsConstants.MESSAGE_200)); // response body
+        } else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseDto(AccountsConstants.STATUS_500, AccountsConstants.MESSAGE_500));
+        }
+    }
 
 }
