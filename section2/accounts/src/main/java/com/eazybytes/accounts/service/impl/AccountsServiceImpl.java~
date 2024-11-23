@@ -102,7 +102,7 @@ public class AccountsServiceImpl implements IAccountsService {
                     () -> new ResourceNotFoundException("Customer", "CustomerId", customerId.toString())
             );
             CustomerMapper.mapToCustomer(customerDto, customer);
-            customerRepository.save(customer);
+
             isUpdated = true;
         }
         return isUpdated;
