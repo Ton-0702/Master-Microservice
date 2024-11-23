@@ -14,6 +14,6 @@ public interface AccountsRepository extends JpaRepository<Accounts, Long> {
     Optional<Accounts> findByCustomerId(Long customerId);
 
     @Transactional // Support to use @Modifying when update and delete have an error and it will be rollback
-    @Modifying // This annotation help Spring know that this query have modification data
+    @Modifying // check if the query is update or delete
     void deleteByCustomerId(Long customerId);
 }
