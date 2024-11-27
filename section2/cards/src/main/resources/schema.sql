@@ -11,4 +11,4 @@ CREATE TABLE IF NOT EXISTS `cards` (
     `updated_at` date DEFAULT NULL,
     `updated_by` varchar(20) DEFAULT NULL,
     PRIMARY KEY (`card_id`)
-)
+);
