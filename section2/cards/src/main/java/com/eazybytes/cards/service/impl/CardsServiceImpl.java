@@ -1,8 +1,11 @@
 package com.eazybytes.cards.service.impl;
 
 import com.eazybytes.cards.constants.CardsConstants;
+import com.eazybytes.cards.dto.CardsDto;
 import com.eazybytes.cards.entity.Cards;
 import com.eazybytes.cards.exception.CardAlreadyExistsException;
+import com.eazybytes.cards.exception.ResourceNotFoundException;
+import com.eazybytes.cards.mapper.CardsMapper;
 import com.eazybytes.cards.repository.CardsRepository;
 import com.eazybytes.cards.service.ICardsService;
 import lombok.AllArgsConstructor;
@@ -43,5 +46,33 @@ public class CardsServiceImpl implements ICardsService {
         newCard.setAmountUsed(0);
         newCard.setAvailableAmount(CardsConstants.NEW_CARD_LIMIT);
         return newCard;
+    }
+
+    /**
+     * @param mobileNumber - Input mobile Number
+     * @Return Card Details based on a given mobileNumber
+     */
+    @Override
+    public CardsDto fetchCard(String mobileNumber) {
+        Cards cards =cardsRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Card", "mobileNumber", mobileNumber)
+        );
+
+        return CardsMapper.mapToCardsDto(cards, new CardsDto());
+    }
+
+    /**
+     * @param cardsDto - CardsDto Object
+     * @return boolean indicating if the update of card details is successful or not
+     */
+    @Override
+    public boolean updateCard(CardsDto cardsDto) {
+        Cards cards = cardsRepository.findByCardNumber(cardsDto.getCardNumber()).orElseThrow(
+                () -> new ResourceNotFoundException("Card", "CardNumber", cardsDto.getCardNumber())
+        );
+        CardsMapper.maptoCards(cardsDto, cards);
+        cardsRepository.save(cards);
+
+        return true;
     }
 }
