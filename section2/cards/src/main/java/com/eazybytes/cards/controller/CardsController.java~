@@ -99,7 +99,7 @@ public class CardsController {
                     )
             )
     })
-    @PutMapping("/update")
+    @PutMapping("update")
     public ResponseEntity<ResponseDto> updateCardDetails(@Valid @RequestBody CardsDto cardsDto) {
         boolean isUpdated = iCardsService.updateCard(cardsDto);
 

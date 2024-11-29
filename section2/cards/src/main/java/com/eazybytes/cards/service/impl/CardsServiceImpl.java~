@@ -86,6 +86,6 @@ public class CardsServiceImpl implements ICardsService {
                 () -> new ResourceNotFoundException("Card", "mobileNumber", mobileNumber)
         );
         cardsRepository.deleteById(cards.getCardId());
-        return true;
+        return false;
     }
 }
