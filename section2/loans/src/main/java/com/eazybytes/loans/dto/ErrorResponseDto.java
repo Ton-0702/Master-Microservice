@@ -3,6 +3,7 @@ package com.eazybytes.loans.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
@@ -22,7 +23,7 @@ public class ErrorResponseDto {
     @Schema(
             description = "Error code representing the error happened"
     )
-    private String errorCode; // status error code
+    private HttpStatus errorCode; // status error code
 
     @Schema(
             description = "Error message representing the error happened"
