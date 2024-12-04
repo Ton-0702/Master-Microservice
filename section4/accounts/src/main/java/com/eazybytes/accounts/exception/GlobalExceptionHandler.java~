@@ -1,0 +1,68 @@
+package com.eazybytes.accounts.exception;
+
+import com.eazybytes.accounts.dto.ErrorResponseDto;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+//Defines a class that can handle global exceptions
+@ControllerAdvice // telling SpringBoot framework whenever any exception is thrown, this class will be invoked
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        Map<String, String> validationErrors = new HashMap<>();
+        List<ObjectError> validationErrorList = ex.getBindingResult().getAllErrors();
+    }
+
+    @ExceptionHandler(Exception.class) // this method will be invoked whenever exception runtime and don't have in any other class exception, it will be invoke in the end
+    public ResponseEntity<ErrorResponseDto> handleGlobalException(Exception exception,
+                                                                            WebRequest webRequest){
+        ErrorResponseDto errorResponseDTO = new ErrorResponseDto(
+                webRequest.getDescription(false), // to get the API path, when true it will return the full path (IP, api, ...)
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                exception.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(errorResponseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class) // this method will be invoked whenever CustomerAlreadyExistsException is thrown
+    public ResponseEntity<ErrorResponseDto> handleResourceNotFoundException(ResourceNotFoundException exception,
+                                                                            WebRequest webRequest){
+        ErrorResponseDto errorResponseDTO = new ErrorResponseDto(
+                webRequest.getDescription(false), // to get the API path, when true it will return the full path (IP, api, ...)
+                HttpStatus.NOT_FOUND,
+                exception.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(errorResponseDTO, HttpStatus.NOT_FOUND);
+    }
+
+    // ExceptionHandler annotation is used to handle the exception to recognize which exception is thrown
+    @ExceptionHandler(CustomerAlreadyExistsException.class) // this method will be invoked whenever CustomerAlreadyExistsException is thrown
+    public ResponseEntity<ErrorResponseDto> handleCustomerAlreadyExistsException(CustomerAlreadyExistsException exception,
+                                                                                 WebRequest webRequest){
+        ErrorResponseDto errorResponseDTO = new ErrorResponseDto(
+                webRequest.getDescription(false), // to get the API path, when true it will return the full path (IP, api, ...)
+                HttpStatus.BAD_REQUEST,
+                exception.getMessage(),
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(errorResponseDTO, HttpStatus.BAD_REQUEST);
+    }
+
+}

@@ -1,0 +1,20 @@
+package com.eazybytes.loans.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+@MappedSuperclass
+@Getter
+@Setter
+@ToString
+@EntityListeners(AuditingEntityListener.class) // tells JPA to use AuditingEntityListener to set created and updated default values
+public class BaseEntity {
+
+    @Column(name = )
+    p
+}
