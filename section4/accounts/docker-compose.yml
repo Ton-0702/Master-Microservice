@@ -1,0 +1,37 @@
+services: # define all our services
+    accounts:
+      image: "luathieng2/accounts:s4"
+      container_name: accounts-ms
+      ports:
+        - "8080:8080"
+      deploy:
+        resources:
+          limits:
+            memory: 700m # maximum memory that the container can use
+      networks: # define network at service level
+        - luathieng2
+    loans:
+      image: "luathieng2/loans:s4"
+      container_name: loans-ms
+      ports:
+        - "8090:8090"
+      deploy:
+        resources:
+          limits:
+            memory: 700m # maximum memory that the container can use
+      networks: # define network at service level
+        - luathieng2
+    cards:
+      image: "luathieng2/cards:s4"
+      container_name: cards-ms
+      ports:
+        - "9000:9000"
+      deploy:
+        resources:
+          limits:
+            memory: 700m # maximum memory that the container can use
+      networks: # define network at service level
+        - luathieng2
+networks: # define our networks at root level like service at before
+  luathieng2:
+    driver: "bridge" # network driver to establish bridge to make services communicate with each other
