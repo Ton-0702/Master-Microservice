@@ -1,0 +1,22 @@
+# This format will help to work on multiple products like Docker, Kubernetes, and Cloud environments
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ''
+  h2:
+    console:
+      enabled: true # enable H2 console to be accessed via http://localhost:8080/h2-console
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update # automatically update database schema
+    show-sql: true # show SQL queries
+
+# Define Properties
+build:
+  version: "1.0"
