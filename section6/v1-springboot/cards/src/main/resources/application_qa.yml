@@ -1,0 +1,18 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+#Define properties
+build:
+  version: "2.0"
+
+#Define properties
+cards:
+  message: "Welcome to EazyBank cards related QA APIs "
+  contactDetails:
+    name: "Dat - QA Lead"
+    email: "Dat@eazybank.com"
+  onCallSupport:
+    - (310) 875-4367
+    - (201) 236-1267

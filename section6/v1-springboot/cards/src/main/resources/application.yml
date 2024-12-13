@@ -15,3 +15,23 @@ spring:
     hibernate:
       ddl-auto: update # automatically update database schema
     show-sql: true # show SQL queries
+  config:
+    import:
+      - "application_qa.yml"
+      - "application_prod.yml"
+  profiles:
+    active: "qa"
+
+#Define properties
+build:
+  version: "3.0"
+
+#Define properties
+cards:
+  message: "Welcome to EazyBank cards related local APIs "
+  contactDetails:
+    name: "Toan - Developer"
+    email: "Toan@eazybank.com"
+  onCallSupport:
+    - (412) 419-3491
+    - (915) 382-1932
